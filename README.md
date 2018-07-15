@@ -60,7 +60,7 @@ Get Role-ID: ?roleinfo <Rolename> --> First field contains the ID of the role
     
     
 ### Thank you for using my Bot
-If you have any question feel free to contact me:
+If you have any questions feel free to contact me:
 
 Twitter: @astrogd
 
