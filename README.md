@@ -70,3 +70,15 @@ You can kick Dyno after you've got the required ID's
 
 Get Serverid: ?serverinfo --> On the bottom of the Embed you can find ID: "SOME ID HERE"
 Get Role-ID: ?roleinfo <Rolename> --> First field contains the ID of the role
+    
+### Thank you for using my Bot
+If you have any questions feel free to contact me:
+
+Twitter: @astrogd
+
+Instagram: @astrogd.eu
+
+Email: support@astrogd.eu
+
+Discord: AstroGD#3416 [Discord Server](https://www.discord.me/astrogd)
+
