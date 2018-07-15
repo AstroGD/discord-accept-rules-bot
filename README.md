@@ -1,6 +1,6 @@
 # Discord Accept Rules Module
 
-This is a module for my Discord Bot Mainframe. You can find it [here](https://www.example.org).
+This is a module for my Discord Bot Mainframe. You can find it [here](https://go.astrogd.eu/mainframe).
 
 ## Installation
 
