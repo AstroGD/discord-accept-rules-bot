@@ -1,4 +1,9 @@
 {
     "guildid": "",
-    "roleid": ""
+    "roleid": "",
+    "embedColor": "#404040",
+    "verifyMessageTitle": "Please verify yourself",
+    "verifyMessageDescription": "Click on the reaction to verify yourself",
+    "verifyMessageFields": [],
+    "verifyMessageReaction": "✅"
 }
