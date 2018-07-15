@@ -22,7 +22,7 @@ const rl = readline.createInterface({
   });
 
 //Required Scripts
-const tools = require(`${__dirname}/tools/tools.js`)(fs, __dirname, version);
+const tools = require(`${__dirname}/tools/tools.js`)(Discord, client, fs, __dirname, version);
 
 //Module Definition
 const discord_accept_rules_bot = require(`${__dirname}/modules/discord-accept-rules-bot.js`)(client, fs, tools, __dirname);
@@ -95,7 +95,6 @@ client.on(`ready`, async () => {
     }
     tools.log(scriptName, "All modules were successfully initialized");
     rl.resume();
-    rl.prompt();
 });
 
 rl.on("line", async (input) => {
@@ -114,7 +113,7 @@ rl.on("line", async (input) => {
             rl.pause();
             return;
         case "help":
-            console.log(`===== Discord Bot Mainframe Commands\n\nshutdown:                     Deactivates all correctly installed Modules and shuts the bot down\nhelp:                         Displays all commands available from Modules or Mainframe\n\n=====`);
+            console.log(`===== Discord Bot Mainframe Commands\n\nshutdown:                     Deactivates all correctly installed Modules and shuts the bot down\nhelp:                         Displays all commands available from Modules or Mainframe\nreloaddb:                     Reloads Database. Use only if changes were made manually\nreloadconfig:                 Reloads Config. Use only if changes were made manually\n\n=====`);
             break;
         default:
             if (!success) {
@@ -124,10 +123,8 @@ rl.on("line", async (input) => {
             break;
     }
 
-    rl.prompt();
 });
 
 rl.pause();
-rl.setPrompt(">> ");
 console.log(`Starting ${scriptName} V${version}...`);
 init();

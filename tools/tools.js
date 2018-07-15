@@ -8,7 +8,7 @@ var scriptName = "tools.js",
 version = "1.0.0",
 mainframeMinVersion = "1.0.1";
 
-module.exports = function (fs, dir, mainframeversion) {
+module.exports = function (Discord, client, fs, dir, mainframeversion) {
 
     async function init() {
         let currdate = new Date();
@@ -55,7 +55,7 @@ module.exports = function (fs, dir, mainframeversion) {
                 break;
         }
 
-        let logCurrent = `[${timestampCurrent}] ${state} [${x}] ${msg.stack ? `An error occurred:\n${msg.stack}` : msg}`;
+        let logCurrent = `[${timestampCurrent}] ${state} [${x}] ${msg}`;
         this.stream.write(logCurrent + '\n');
         console.log(logCurrent);
     }
@@ -78,7 +78,7 @@ module.exports = function (fs, dir, mainframeversion) {
                 break;
         }
 
-        let logCurrent = `[${timestampCurrent}] ${state} [${x}] ${msg.stack ? `An error occurred:\n${msg.stack}` : msg}`;
+        let logCurrent = `[${timestampCurrent}] ${state} [${x}] ${msg}`;
         this.stream.write(logCurrent + '\n');
     }
 
@@ -111,11 +111,41 @@ module.exports = function (fs, dir, mainframeversion) {
         }
     }
 
+    function makeEmbed(author, color, title, description, fields) {
+        try {
+            var embed = new Discord.RichEmbed();
+        embed.setColor(color)
+            .setFooter(`AstroGD Discord Mainframe System V${mainframeversion}`, client.user.avatarURL)
+            .setTimestamp(new Date())
+            .setTitle(title)
+            .setDescription(description);
+
+        if (author) {
+            embed.setAuthor(author.username, author.avatarURL);
+        }
+
+        if (fields) {
+            for (var i = 0; i < fields.length; i++) {
+                if (!fields[i].inline) fields[i].inline = false;
+                if (!fields[i].empty) {
+                    embed.addField(fields[i].title, fields[i].value, fields[i].inline);
+                } else {
+                    embed.addBlankField(fields[i].inline);
+                }
+            }
+        }
+        return embed;
+        } catch (e) {
+            throw e;
+        }
+    }
+
     return {
         init,
         log,
         logFile,
         command,
-        checkMainframeVersion
+        checkMainframeVersion,
+        makeEmbed
     }
 }
