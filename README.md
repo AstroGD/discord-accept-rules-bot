@@ -20,6 +20,46 @@ To start the Bot you need [NodeJS](https://nodejs.org/en/download/current/) inst
 
 The Bot should now start. After finishing the initialization you can type `help` and press enter to get a list of available commands.
 
+### verifyMessageFields
+
+verifyMessageFields contains an Array with an object for each additional field. Each Object can contain the following parameters:
+
+- title: (String) The Title of your Field
+- value: (String) The content of your Field (supports formatting)
+- inline: (Boolean, Default false) true if you want the field to be on the right side of the field above. You can create Table like Structures with this option
+- empty: (Boolean, Default false) if true an empty Field wil be created for spacing. title and value are being ignored, inline not!
+
+Example:
+
+   ```
+   [
+    {
+     "title": "Title",
+     "value": "Content"
+    },
+    {
+     "title": "Title2",
+     "value": "Content2",
+     "inline": true
+    },{
+     "empty": true
+    },{
+     "title": "After Empty",
+     "value": "After Empty content"
+    }
+   ]
+   ```
+
+### Role and Serverids
+
+To get Role and Serverids, you may use a bot, to keep things simple. I recommend [DynoBot](https://www.dynobot.net/).
+You can kick Dyno after you've got the required ID's
+
+Get Serverid: ?serverinfo --> On the bottom of the Embed you can find ID: "SOME ID HERE"
+Get Role-ID: ?roleinfo <Rolename> --> First field contains the ID of the role
+    
+    
+### Thank you for using my Bot
 If you have any question feel free to contact me:
 
 Twitter: @astrogd
