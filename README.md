@@ -1,0 +1,1 @@
+# discord-accept-rules-bot
