@@ -12,7 +12,7 @@
     "url": "git+https://github.com/AstroGD/discord-accept-rules-bot.git"
   },
   "author": "AstroGD",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/AstroGD/discord-accept-rules-bot/issues"
   },
