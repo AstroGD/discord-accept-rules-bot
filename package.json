@@ -1,0 +1,22 @@
+{
+  "name": "discord-accept-rules-bot",
+  "version": "1.0.0",
+  "description": "Let your Members accept the rules first and then give them a role",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AstroGD/discord-accept-rules-bot.git"
+  },
+  "author": "AstroGD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AstroGD/discord-accept-rules-bot/issues"
+  },
+  "homepage": "https://github.com/AstroGD/discord-accept-rules-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
+}
