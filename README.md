@@ -1,3 +1,10 @@
+# This repository is no longer maintained
+Because of me focussing on other projects this repository will no longer be maintained.
+You are free to use my code still along the license but keep in mind that it may not work any longer and there may be security vulnerabilities due to outdated packages.
+Thank you for showing interest in this project.
+
+~~ AstroGD
+
 # Discord Bot Mainframe + Discord Accept Rules Module
 
 This is version 1.0.1 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainframe) with my Discord Accept Rules Module installed
