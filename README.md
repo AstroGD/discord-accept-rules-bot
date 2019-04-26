@@ -23,9 +23,11 @@ This is version 1.0.1 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainfr
 
 ## Usage
 
-To start the Bot you need [NodeJS](https://nodejs.org/en/download/current/) installed on your Device. Then open a command prompt in the folder, you've installed the Mainframe to and type `npm start`.
+To start the Bot you need [NodeJS](https://nodejs.org/en/download/current/) installed on your Device. Then open a command prompt in the folder, you've installed the Mainframe to and type `npm install`. This will install all required dependencies that are needed to run the bot. This may take a while depending on the speed of your server's internet connection and performance.
 
-The Bot should now start. After finishing the initialization you can type `help` and press enter to get a list of available commands.
+After the installation is finished type `npm start` in the same location; the Bot should now start. After finishing the initialization you can type `help` and press enter to get a list of available commands.
+
+#### Note: you don't need to install the dependencies every time you want to run the bot. This step is only required once before your first use.
 
 ### verifyMessageFields
 
