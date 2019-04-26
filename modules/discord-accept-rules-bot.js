@@ -64,6 +64,18 @@ module.exports = function (client, fs, tools, dir) {
                         tools.log(scriptName, `The specified role was not found on the server. Please check modules config.`, 1);
                         return;
                     }
+                    
+                    if (!isNaN(config.waitUntilVerifiedInSeconds) && config.waitUntilVerifiedInSeconds > 0) {
+                        let waitDuration = Number(config.waitUntilVerifiedInSeconds) * 1000;
+                        
+                        tools.log(scriptName, `Timeout set - Waiting ${waitDuration} Seconds before verifying`);
+                        
+                        await new Promise((resolve, reject) => {
+                           setTimeout(() => {
+                                resolve();
+                           },waitDuration); 
+                        });
+                    }
 
                     try {
                         await member.addRole(role);
