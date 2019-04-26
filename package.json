@@ -1,6 +1,6 @@
 {
   "name": "discord-accept-rules-bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Let your Members accept the rules first and then give them a role",
   "main": "main.js",
   "scripts": {
