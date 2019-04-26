@@ -5,5 +5,6 @@
     "verifyMessageTitle": "Please verify yourself",
     "verifyMessageDescription": "Click on the reaction to verify yourself",
     "verifyMessageFields": [],
-    "verifyMessageReaction": "✅"
+    "verifyMessageReaction": "✅",
+    "waitUntilVerifiedInSeconds" : 0
 }
