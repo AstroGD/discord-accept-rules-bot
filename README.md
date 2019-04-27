@@ -7,7 +7,7 @@ Thank you for showing interest in this project.
 
 # Discord Bot Mainframe + Discord Accept Rules Module
 
-This is version 1.1.0 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainframe) with my Discord Accept Rules Module installed
+This is version 1.1.1 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainframe) with my Discord Accept Rules Module installed
 
 ## Installation
 
