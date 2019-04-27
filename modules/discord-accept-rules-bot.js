@@ -1,12 +1,12 @@
 /**
  * Discord Accept Rules Bot
- * @version 1.1.0
+ * @version 1.1.1
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
 var scriptName = "modules.discord-accept-rules-bot.js",
-    version = "1.1.0",
+    version = "1.1.1",
     mainframeMinVersion = "1.0.1";
 
 module.exports = function (client, fs, tools, dir) {
@@ -65,8 +65,8 @@ module.exports = function (client, fs, tools, dir) {
                         return;
                     }
                     
-                    if (!isNaN(config.waitUntilVerifiedInSeconds) && config.waitUntilVerifiedInSeconds > 0) {
-                        let waitDuration = Number(config.waitUntilVerifiedInSeconds) * 1000;
+                    if (!isNaN(this.config.waitUntilVerifiedInSeconds) && this.config.waitUntilVerifiedInSeconds > 0) {
+                        let waitDuration = Number(this.config.waitUntilVerifiedInSeconds) * 1000;
                         
                         tools.log(scriptName, `Timeout set - Waiting ${waitDuration} Seconds before verifying`);
                         
