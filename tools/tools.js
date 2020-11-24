@@ -1,12 +1,12 @@
 /**
  * Tools js
- * @version 1.0.0
+ * @version 2.0.0
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 var scriptName = "tools.js",
-version = "1.0.0",
-mainframeMinVersion = "1.0.1";
+    version = "2.0.0",
+    mainframeMinVersion = "2.0.0";
 
 module.exports = function (Discord, client, fs, dir, mainframeversion) {
 
@@ -82,13 +82,13 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
         this.stream.write(logCurrent + '\n');
     }
 
-    async function command(cmd, args) {
+    async function command(cmd, _args) {
         if (!this.initialized) return;
         switch (cmd) {
             case "help":
                 console.log(`===== Help Commands from Modules and Mainframe\n\n`);
                 break;
-        
+
             default:
                 break;
         }
@@ -111,33 +111,105 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
         }
     }
 
+    function isVersionLower(base, check) {
+        base = base.split(".");
+        check = check.split(".");
+
+        if (check[0] < base[0]) return true;
+        if (check[0] == base[0] && check[1] < base[1]) return true;
+        if (check[0] == base[0] && check[1] == base[1] && check[2] < base[2]) return true;
+
+        return false;
+    }
+
     function makeEmbed(author, color, title, description, fields) {
         try {
-            var embed = new Discord.RichEmbed();
-        embed.setColor(color)
-            .setFooter(`AstroGD Discord Mainframe System V${mainframeversion}`, client.user.avatarURL)
-            .setTimestamp(new Date())
-            .setTitle(title)
-            .setDescription(description);
+            var embed = new Discord.MessageEmbed();
+            embed.setColor(color)
+                .setFooter(`AstroGD Discord Mainframe System V${mainframeversion}`, client.user.avatarURL)
+                .setTimestamp(new Date())
+                .setTitle(title)
+                .setDescription(description);
 
-        if (author) {
-            embed.setAuthor(author.username, author.avatarURL);
-        }
+            if (author) {
+                embed.setAuthor(author.username, author.avatarURL);
+            }
 
-        if (fields) {
-            for (var i = 0; i < fields.length; i++) {
-                if (!fields[i].inline) fields[i].inline = false;
-                if (!fields[i].empty) {
-                    embed.addField(fields[i].title, fields[i].value, fields[i].inline);
-                } else {
-                    embed.addBlankField(fields[i].inline);
+            if (fields) {
+                for (var i = 0; i < fields.length; i++) {
+                    if (!fields[i].inline) fields[i].inline = false;
+                    if (!fields[i].empty) {
+                        embed.addField(fields[i].title, fields[i].value, fields[i].inline);
+                    } else {
+                        embed.addField('\u200b', '\u200b', fields[i].inline);
+                    }
                 }
             }
-        }
-        return embed;
+            return embed;
         } catch (e) {
             throw e;
         }
+    }
+
+    function getServerVersionPack() {
+        return new Promise((resolve, reject) => {
+            const https = require('follow-redirects').https;
+
+            var options = {
+                'method': 'GET',
+                'hostname': 'software.astrogd.eu',
+                'path': '/mainframe/version.json',
+                'headers': {},
+                'maxRedirects': 20
+            };
+
+            var req = https.request(options, function (res) {
+                var chunks = [];
+
+                res.on("data", function (chunk) {
+                    chunks.push(chunk);
+                });
+
+                res.on("end", function () {
+                    var body = Buffer.concat(chunks);
+                    resolve(body);
+                });
+
+                res.on("error", function (error) {
+                    reject(error);
+                });
+            });
+
+            req.end();
+        });
+    }
+
+    async function checkVersion() {
+        let versionInfo = null;
+        try {
+            versionInfo = await getServerVersionPack();
+        } catch (error) {
+            log(scriptName, `Version couldn't be checked! Make sure to allow network access to software.astrogd.eu`, 1);
+            return null;
+        }
+
+        if (!versionInfo) {
+            log(scriptName, `Version couldn't be checked! Make sure to allow network access to software.astrogd.eu`, 1);
+            return null;
+
+        }
+        versionInfo = JSON.parse(versionInfo.toString());
+
+        return versionInfo;
+    }
+
+    function checkToolsVersion() {
+        if (isVersionLower(VERSIONINFO.packages.tools, version)) {
+            tools.log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.version})`, 2);
+            return true;
+        }
+
+        return false;
     }
 
     return {
@@ -146,6 +218,9 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
         logFile,
         command,
         checkMainframeVersion,
-        makeEmbed
+        makeEmbed,
+        checkVersion,
+        isVersionLower,
+        checkToolsVersion
     }
 }

@@ -1,13 +1,6 @@
-# This repository is no longer maintained
-Because of me focussing on other projects this repository will no longer be maintained.
-You are free to use my code still along the license but keep in mind that it may not work any longer and there may be security vulnerabilities due to outdated packages.
-Thank you for showing interest in this project.
-
-~~ AstroGD
-
 # Discord Bot Mainframe + Discord Accept Rules Module
 
-This is version 1.1.1 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainframe) with my Discord Accept Rules Module installed
+This is version 2.0.0 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainframe) with my Discord Accept Rules Module installed
 
 ## Installation
 
@@ -25,9 +18,11 @@ This is version 1.1.1 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainfr
 
 To start the Bot you need [NodeJS](https://nodejs.org/en/download/current/) installed on your Device. Then open a command prompt in the folder, you've installed the Mainframe to and type `npm install`. This will install all required dependencies that are needed to run the bot. This may take a while depending on the speed of your server's internet connection and performance.
 
+**NodeJS 12 or higher is required for this bot to work!**
+
 After the installation is finished type `npm start` in the same location; the Bot should now start. After finishing the initialization you can type `help` and press enter to get a list of available commands.
 
-#### Note: you don't need to install the dependencies every time you want to run the bot. This step is only required once before your first use.
+#### Note: you don't need to install the dependencies every time you want to run the bot. This step is only required once before your first use and after you update your bot.
 
 ### verifyMessageFields
 
@@ -75,6 +70,6 @@ Twitter: @astrogd
 
 Instagram: @astrogd.eu
 
-Email: support@astrogd.eu
+Email: hello@astrogd.eu
 
-Discord: AstroGD#3416 [Discord Server](https://www.discord.me/astrogd)
+Discord: AstroGD#3416 [Discord Server](https://go.astrogd.eu/discord)

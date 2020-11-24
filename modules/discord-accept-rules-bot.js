@@ -1,13 +1,13 @@
 /**
  * Discord Accept Rules Bot
- * @version 1.1.1
+ * @version 2.0.0
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
 var scriptName = "modules.discord-accept-rules-bot.js",
-    version = "1.1.1",
-    mainframeMinVersion = "1.0.1";
+    version = "2.0.0",
+    mainframeMinVersion = "2.0.0";
 
 module.exports = function (client, fs, tools, dir) {
 
@@ -24,10 +24,12 @@ module.exports = function (client, fs, tools, dir) {
             this.activated = true;
         }
 
+        if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.version})`, 2);
+
         this.db = JSON.parse(fs.readFileSync(`${dir}/db/discord-accept-rules-bot.db`, "utf-8"));
         this.config = require(`${dir}/config/discord-accept-rules-bot.json`);
 
-        if (!client.guilds.get(this.config.guildid)) {
+        if (!await client.guilds.fetch(this.config.guildid)) {
             tools.log(scriptName, `The guild specified in the modules config was not found. Please check the config file. Verifymessage could not be sent.`, 1);
             this.initialized = false;
             return;
@@ -36,14 +38,14 @@ module.exports = function (client, fs, tools, dir) {
         if (!this.db.messageid) {
             tools.log(scriptName, `There is no Welcome Message saved. Please add one using "addverifymessage <Channelid>" in the command line`, 2);
         } else {
-            let guild = client.guilds.get(this.config.guildid);
+            let guild = await client.guilds.fetch(this.config.guildid);
             if (guild) {
-                let channel = guild.channels.get(this.db.messagechannelid);
+                let channel = guild.channels.resolve(this.db.messagechannelid);
                 if (!channel) {
                     tools.log(scriptName, `There is no Welcome Message saved. Please add one using "addverifymessage <Channelid>" in the command line`, 2);
                 } else {
                     try {
-                        await channel.fetchMessage(this.db.messageid);
+                        await channel.messages.fetch(this.db.messageid);
                     } catch (e) {
                         tools.log(scriptName, `There is no Welcome Message saved. Please add one using "addverifymessage <Channelid>" in the command line`, 2);
                     }
@@ -55,11 +57,11 @@ module.exports = function (client, fs, tools, dir) {
         client.on("messageReactionAdd", async (reaction, user) => {
             if (user.bot) return;
             if (reaction.emoji.name == this.config.verifyMessageReaction && reaction.message.id == this.db.messageid) {
-                let member = reaction.message.guild.members.get(user.id);
+                let member = await reaction.message.guild.members.fetch(user.id);
                 if (!member) return;
 
-                if (!member.roles.get(this.config.roleid)) {
-                    let role = reaction.message.guild.roles.get(this.config.roleid);
+                if (!member.roles.cache.get(this.config.roleid)) {
+                    let role = reaction.message.guild.roles.cache.get(this.config.roleid);
                     if (!role) {
                         tools.log(scriptName, `The specified role was not found on the server. Please check modules config.`, 1);
                         return;
@@ -70,7 +72,7 @@ module.exports = function (client, fs, tools, dir) {
                         
                         tools.log(scriptName, `Timeout set - Waiting ${waitDuration} Seconds before verifying`);
                         
-                        await new Promise((resolve, reject) => {
+                        await new Promise((resolve, _reject) => {
                            setTimeout(() => {
                                 resolve();
                            },waitDuration); 
@@ -78,7 +80,7 @@ module.exports = function (client, fs, tools, dir) {
                     }
 
                     try {
-                        await member.addRole(role);
+                        await member.roles.add(role);
                     } catch (e) {
                         tools.log(scriptName, `Couldn't add Verify Role to ${member.user.tag}: ${e.message}`, 1);
                         return;
@@ -126,13 +128,13 @@ module.exports = function (client, fs, tools, dir) {
                     return true;
                 }
 
-                let guild2 = client.guilds.get(this.config.guildid);
+                let guild2 = await client.guilds.fetch(this.config.guildid);
                 if (!guild2) {
                     tools.log(scriptName, `The guild specified in the modules config was not found. Please check the config file. Verifymessage could not be sent.`, 1);
                     return true;
                 }
 
-                let channel = guild2.channels.get(args[0]);
+                let channel = guild2.channels.resolve(args[0]);
                 if (!channel) {
                     tools.log(scriptName, `The specified channel could not be found in the guild.`, 1);
                     return true;
@@ -146,7 +148,7 @@ module.exports = function (client, fs, tools, dir) {
                 }
 
                 try {
-                    var msg = await channel.send({
+                    var msg = await channel.send("",{
                         embed: embed
                     });
                 } catch (e) {
@@ -175,31 +177,31 @@ module.exports = function (client, fs, tools, dir) {
                     return true;
                 }
 
-                let guild3 = client.guilds.get(this.config.guildid);
+                let guild3 = await client.guilds.fetch(this.config.guildid);
                 if (!guild3) {
                     tools.log(scriptName, `The guild specified in the modules config was not found. Please check the config file.`, 1);
                     return true;
                 }
 
-                let member2 = guild3.members.get(args[0]);
+                let member2 = await guild3.members.fetch(args[0]);
                 if (!member2) {
                     tools.log(scriptName, `The specified user was not found on the server.`, 1);
                     return true;
                 }
 
-                if (member2.roles.get(this.config.roleid)) {
+                if (member2.roles.cache.has(this.config.roleid)) {
                     tools.log(scriptName, `The specified user is already verified.`, 1);
                     return true;
                 }
 
-                let role = guild3.roles.get(this.config.roleid);
+                let role = guild3.roles.cache.get(this.config.roleid);
                 if (!role) {
                     tools.log(scriptName, `The specified role was not found on the server. Please check modules config.`, 1);
                     return true;
                 }
 
                 try {
-                    await member2.addRole(role);
+                    await member2.roles.add(role);
                 } catch (e) {
                     tools.log(scriptName, `Couldn't add Verify Role to ${member2.user.tag}: ${e.message}`, 1);
                     return true;
@@ -213,31 +215,31 @@ module.exports = function (client, fs, tools, dir) {
                     return true;
                 }
 
-                let guild4 = client.guilds.get(this.config.guildid);
+                let guild4 = await client.guilds.fetch(this.config.guildid);
                 if (!guild4) {
                     tools.log(scriptName, `The guild specified in the modules config was not found. Please check the config file.`, 1);
                     return true;
                 }
 
-                let member3 = guild4.members.get(args[0]);
+                let member3 = await guild4.members.fetch(args[0]);
                 if (!member3) {
                     tools.log(scriptName, `The specified user was not found on the server.`, 1);
                     return true;
                 }
 
-                if (!member3.roles.get(this.config.roleid)) {
+                if (!member3.roles.cache.has(this.config.roleid)) {
                     tools.log(scriptName, `The specified user is not verified.`, 1);
                     return true;
                 }
 
-                let role2 = guild4.roles.get(this.config.roleid);
+                let role2 = guild4.roles.cache.get(this.config.roleid);
                 if (!role2) {
                     tools.log(scriptName, `The specified role was not found on the server. Please check modules config.`, 1);
                     return true;
                 }
 
                 try {
-                    await member3.removeRole(role2);
+                    await member3.roles.remove(role2);
                 } catch (e) {
                     tools.log(scriptName, `Couldn't remove Verify Role from ${member3.user.tag}: ${e.message}`, 1);
                     return true;
@@ -253,10 +255,20 @@ module.exports = function (client, fs, tools, dir) {
         }
     }
 
+    function checkVersion() {
+        if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) {
+            tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.version})`, 2);
+            return true;
+        }
+
+        return false;
+    }
+
     return {
         init,
         activate,
         deactivate,
-        command
+        command,
+        checkVersion
     }
 }
