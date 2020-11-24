@@ -4,7 +4,8 @@ This is version 2.0.0 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainfr
 
 ## Installation
 
-- Edit config/config.json and insert your Discord Bot User Token [Here's an explanation of how to create a Discord Bot Account](https://medium.com/@gregjwww/how-to-build-a-discord-bot-6c5b612c651).
+- Edit config/config.json and insert your Discord Bot User Token [Here's an explanation on how to create a Discord Bot Account](https://astrogd.medium.com/how-to-create-a-discord-bot-application-afbe0e1e76af).
+- **In order for your bot to work make sure to enable the "Server Members Intent"! [More on that can be found here](https://astrogd.medium.com/how-to-create-a-discord-bot-application-afbe0e1e76af)**
 - Edit config/discord-accept-rules-bot.json and insert the required values:
     - guildid: The ID of the server, the Bot should listen to (Example: 195221422682013696).
     - roleid: The ID of the role, the Bot should give Users, that accepted the rules.
@@ -62,13 +63,24 @@ You can kick Dyno after you've got the required ID's
 Get Serverid: ?serverinfo --> On the bottom of the Embed you can find ID: "SOME ID HERE"
 Get Role-ID: ?roleinfo <Rolename> --> First field contains the ID of the role
     
+## Updating from V1
+If you have used V1 of this bot: No worries
+- Make sure you have NodeJS 12 or higher installed by using `node -v` inside a console window
+- Replace every file **except files located in "db" or "config"** with the new ones from [here](https://github.com/AstroGD/discord-accept-rules-bot/releases/latest)
+- Run `npm install` inside the bots folder to install all required dependencies
+- Make sure you have "Server Members Intent" enabled for your Discord Bot Application. [More on that can be found here](https://astrogd.medium.com/how-to-create-a-discord-bot-application-afbe0e1e76af)
+
+Now you're good to go!
+
+If you're having issues make sure to reach out to me
     
-### Thank you for using my Bot
-If you have any questions feel free to contact me:
+    
+## Thank you for using my Bot
+If you have any questions feel free to reach out:
 
-Twitter: @astrogd
+Twitter: [@astrogd](https://www.twitter.com/astrogd)
 
-Instagram: @astrogd.eu
+Instagram: [@astrogd](https://www.instagram.com/astrogd)
 
 Email: hello@astrogd.eu
 
