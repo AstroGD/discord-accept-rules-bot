@@ -1,11 +1,11 @@
 /**
  * Tools js
- * @version 2.0.2
+ * @version 2.0.3
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 var scriptName = "tools.js",
-    version = "2.0.2",
+    version = "2.0.3",
     mainframeMinVersion = "2.0.0";
 
 module.exports = function (Discord, client, fs, dir, mainframeversion) {
@@ -189,12 +189,12 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
         try {
             versionInfo = await getServerVersionPack();
         } catch (error) {
-            log(scriptName, `Version couldn't be checked! Make sure to allow network access to software.astrogd.eu`, 1);
+            this.log(scriptName, `Version couldn't be checked! Make sure to allow network access to software.astrogd.eu`, 1);
             return null;
         }
 
         if (!versionInfo) {
-            log(scriptName, `Version couldn't be checked! Make sure to allow network access to software.astrogd.eu`, 1);
+            this.log(scriptName, `Version couldn't be checked! Make sure to allow network access to software.astrogd.eu`, 1);
             return null;
 
         }
@@ -205,7 +205,7 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
 
     function checkToolsVersion() {
         if (isVersionLower(VERSIONINFO.packages.tools, version)) {
-            log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.packages.tools})`, 2);
+            this.log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.packages.tools})`, 2);
             return true;
         }
 
