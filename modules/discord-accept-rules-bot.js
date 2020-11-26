@@ -28,7 +28,7 @@ module.exports = function (client, fs, tools, dir) {
             this.activated = true;
         }
 
-        if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.version})`, 2);
+        if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.packages.acceptRulesBot})`, 2);
 
         this.db = JSON.parse(fs.readFileSync(`${dir}/db/discord-accept-rules-bot.db`, "utf-8"));
         this.config = checkConfigVersion(require(`${dir}/config/discord-accept-rules-bot.json`));
@@ -277,7 +277,7 @@ module.exports = function (client, fs, tools, dir) {
 
     function checkVersion() {
         if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) {
-            tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.version})`, 2);
+            tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.packages.acceptRulesBot})`, 2);
             return true;
         }
 

@@ -205,7 +205,7 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
 
     function checkToolsVersion() {
         if (isVersionLower(VERSIONINFO.packages.tools, version)) {
-            tools.log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.version})`, 2);
+            tools.log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.packages.tools})`, 2);
             return true;
         }
 
