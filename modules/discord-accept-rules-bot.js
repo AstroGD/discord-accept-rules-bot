@@ -1,12 +1,12 @@
 /**
  * Discord Accept Rules Bot
- * @version 2.1.0
+ * @version 2.1.1
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
 var scriptName = "modules.discord-accept-rules-bot.js",
-    version = "2.1.0",
+    version = "2.1.1",
     mainframeMinVersion = "2.0.0";
 
 const path = require("path");
