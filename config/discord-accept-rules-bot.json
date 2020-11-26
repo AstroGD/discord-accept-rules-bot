@@ -1,4 +1,5 @@
 {
+    "version": 2,
     "guildid": "",
     "roleid": "",
     "embedColor": "#404040",
@@ -6,5 +7,7 @@
     "verifyMessageDescription": "Click on the reaction to verify yourself",
     "verifyMessageFields": [],
     "verifyMessageReaction": "✅",
-    "waitUntilVerifiedInSeconds" : 0
+    "waitUntilVerifiedInSeconds" : 0,
+    "prefix": "/",
+    "disableGetEmojiCommand": false
 }

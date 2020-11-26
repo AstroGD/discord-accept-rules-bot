@@ -1,6 +1,6 @@
 # Discord Bot Mainframe + Discord Accept Rules Module
 
-This is version 2.0.0 of my [Discord Bot Mainframe](https://go.astrogd.eu/mainframe) with my Discord Accept Rules Module installed
+This is version 2.0.0 of my Discord Bot Mainframe with my Discord Accept Rules Module installed
 
 ## Installation
 
@@ -36,11 +36,12 @@ verifyMessageFields contains an Array with an object for each additional field. 
 
 Example:
 
-   ```
+   ```json
    [
     {
      "title": "Title",
-     "value": "Content"
+     "value": "Content",
+     "inline": true
     },
     {
      "title": "Title2",
@@ -62,6 +63,16 @@ You can kick Dyno after you've got the required ID's
 
 Get Serverid: ?serverinfo --> On the bottom of the Embed you can find ID: "SOME ID HERE"
 Get Role-ID: ?roleinfo <Rolename> --> First field contains the ID of the role
+
+### Using custom emojis as reaction
+
+If you want the bot to react with a custom emoji, you need to adjust the discord-accept-rules-bot.json config.
+The property `verifyMessageReaction` not only accepts Unicode emojis, but also Discord Emoji Identifiers.
+
+To get an identifier of a custom emoji use `/getEmoji [Emoji]`. *Adjust accordingly if you have changed the prefix for this command*<br>
+Make sure you haven't disabled this command in the config if you want to use it!
+
+**Note: The bot can only use emojis from your server or other servers he was invited in - Custom emojis from servers the bot is not connected to will result in an "unknown emoji" error**
     
 ## Updating from V1
 If you have used V1 of this bot: No worries

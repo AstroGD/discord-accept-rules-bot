@@ -9,7 +9,11 @@ var scriptName = "modules.discord-accept-rules-bot.js",
     version = "2.0.0",
     mainframeMinVersion = "2.0.0";
 
+const path = require("path");
+
 module.exports = function (client, fs, tools, dir) {
+
+    var config;
 
     async function init(deactivated) {
         tools.log(scriptName, `Initializing ${scriptName} V${version}`);
@@ -27,7 +31,8 @@ module.exports = function (client, fs, tools, dir) {
         if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.version})`, 2);
 
         this.db = JSON.parse(fs.readFileSync(`${dir}/db/discord-accept-rules-bot.db`, "utf-8"));
-        this.config = require(`${dir}/config/discord-accept-rules-bot.json`);
+        this.config = checkConfigVersion(require(`${dir}/config/discord-accept-rules-bot.json`));
+        config = this.config;
 
         if (!await client.guilds.fetch(this.config.guildid)) {
             tools.log(scriptName, `The guild specified in the modules config was not found. Please check the config file. Verifymessage could not be sent.`, 1);
@@ -91,6 +96,20 @@ module.exports = function (client, fs, tools, dir) {
                 }
             }
         });
+
+        client.on("message", (message) => {
+            if (message.author.bot || message.author.id == client.user.id) return;
+            if (!message.content.startsWith(this.config.prefix)) return;
+
+            const SplitMessage = message.content.split(" ");
+            const Command = SplitMessage[0].toLowerCase().slice(this.config.prefix.length);
+            const Args = SplitMessage.slice(1);
+
+            checkCommand(message, Command, Args).catch(e => {
+                message.channel.send(`:x: Whoops - An error occurred during your request. Please check logs for additional information`).catch(e => {});
+                tools.log(scriptName, `An error occurred while processing command "${Command}" from "${message.author.tag}":\n${e.stack}`, 1);
+            });
+        });
     }
 
     function activate() {
@@ -119,7 +138,8 @@ module.exports = function (client, fs, tools, dir) {
                 tools.log(scriptName, `Database successfully reloaded`);
                 return true;
             case "reloadconfig":
-                this.config = JSON.parse(fs.readFileSync(`${dir}/config/discord-accept-rules-bot.json`, "utf-8"));
+                this.config = checkConfigVersion(JSON.parse(fs.readFileSync(`${dir}/config/discord-accept-rules-bot.json`, "utf-8")));
+                config = this.config;
                 tools.log(scriptName, `Config successfully reloaded`);
                 return true;
             case "addverifymessage":
@@ -262,6 +282,44 @@ module.exports = function (client, fs, tools, dir) {
         }
 
         return false;
+    }
+
+    function checkConfigVersion(config) {
+        if (config.hasOwnProperty("version") && config.version >= 2) return config;
+        config.version = 2;
+        config.prefix = "/";
+        config.disableGetEmojiCommand = false;
+
+        fs.writeFileSync(path.join(__dirname, "../config/discord-accept-rules-bot.json"), JSON.stringify(config));
+        tools.log(scriptName, "Config has been updated to version 2. Check your discord-accept-rules-bot.json to adjust the new options", 2);
+
+        return config;
+    }
+
+    async function checkCommand(message, cmd, args) {
+        if (!Commands.hasOwnProperty(cmd)) {
+            return;
+        }
+
+        if (await Commands[cmd](message, args)) {
+            tools.log(scriptName, `"${cmd}" executed successfully for "${message.author.tag}"`);
+        }
+    }
+
+    const Commands = {
+        getemoji: async (message, args) => {
+            if (config.disableGetEmojiCommand) {
+                tools.log(scriptName, "GetEmoji command was called but it is disabled in the config. Check your settings and try again.", 2);
+                return;
+            }
+            if (!args[0]) {
+                message.channel.send(`:x: Missing argument! - Usage: ${config.prefix}getEmoji [Emoji]`).catch(e => {});
+                return false;
+            }
+
+            message.channel.send(`Here's your Emoji identifier:\n\`${args[0].split("<").join("").split(">").join("")}\``).catch(e => {});
+            return true;
+        }
     }
 
     return {
