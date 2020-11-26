@@ -1,11 +1,11 @@
 /**
  * Tools js
- * @version 2.0.1
+ * @version 2.0.2
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 var scriptName = "tools.js",
-    version = "2.0.1",
+    version = "2.0.2",
     mainframeMinVersion = "2.0.0";
 
 module.exports = function (Discord, client, fs, dir, mainframeversion) {
@@ -205,7 +205,7 @@ module.exports = function (Discord, client, fs, dir, mainframeversion) {
 
     function checkToolsVersion() {
         if (isVersionLower(VERSIONINFO.packages.tools, version)) {
-            tools.log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.packages.tools})`, 2);
+            log(scriptName, `Theres a new version available for Mainframe Tools (${version} --> ${VERSIONINFO.packages.tools})`, 2);
             return true;
         }
 
