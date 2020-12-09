@@ -1,12 +1,12 @@
 /**
  * Discord Accept Rules Bot
- * @version 2.1.1
+ * @version 2.1.2
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
 var scriptName = "modules.discord-accept-rules-bot.js",
-    version = "2.1.1",
+    version = "2.1.2",
     mainframeMinVersion = "2.0.0";
 
 const path = require("path");
@@ -61,7 +61,9 @@ module.exports = function (client, fs, tools, dir) {
 
         client.on("messageReactionAdd", async (reaction, user) => {
             if (user.bot) return;
-            if (reaction.emoji.name == this.config.verifyMessageReaction && reaction.message.id == this.db.messageid) {
+            let savedEmoji = this.config.verifyMessageReaction.split(":");
+            savedEmoji = savedEmoji[savedEmoji.length - 1];
+            if ((savedEmoji == reaction.emoji.name || savedEmoji == reaction.emoji.id) && reaction.message.id == this.db.messageid) {
                 let member = await reaction.message.guild.members.fetch(user.id);
                 if (!member) return;
 
