@@ -1,18 +1,17 @@
 /**
  * Discord Bot Mainframe
- * @version 2.0.0
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
-const scriptName = 'main.js',
-    version = '2.0.0';
+const scriptName = 'main.js';
 
 //Required Modules and Files
 const Discord = require("discord.js");
 const config = require(`${__dirname}/config/config.json`);
 const fs = require("fs-extra");
 const readline = require("readline");
+const package = require(`${__dirname}/package.json`);
 
 //Instances
 const client = new Discord.Client();
@@ -23,7 +22,7 @@ const rl = readline.createInterface({
 rl.setPrompt("> ");
 
 //Required Scripts
-const tools = require(`${__dirname}/tools/tools.js`)(Discord, client, fs, __dirname, version);
+const tools = require(`${__dirname}/tools/tools.js`)(Discord, client, fs, __dirname);
 
 //Module Definition
 const discord_accept_rules_bot = require(`${__dirname}/modules/discord-accept-rules-bot.js`)(client, fs, tools, __dirname);
@@ -78,10 +77,8 @@ async function init() {
     if (!VERSIONINFO) {
         tools.log(scriptName, "Version couldn't be fetched. Make sure you have a connection to the internet and access to software.astrogd.eu", 1);
     } else {
-        if (tools.isVersionLower(VERSIONINFO.version, version)) tools.log(scriptName, `Theres a new version available for Discord Mainframe (${version} --> ${VERSIONINFO.version})`, 2);
+        if (tools.isVersionLower(VERSIONINFO.version, version)) tools.log(scriptName, `Theres a new version available for Discord accept rules bot by AstroGD (${version} --> ${VERSIONINFO.version})`, 2);
     }
-
-    tools.checkToolsVersion();
 
     tools.log(scriptName, "Logging in...");
     try {
@@ -102,12 +99,9 @@ async function checkVersion() {
 
     let newVerAvailable = false;
     if (tools.isVersionLower(VERSIONINFO.version, version)) {
-        tools.log(scriptName, `Theres a new version available for Discord Mainframe (${version} --> ${VERSIONINFO.version})`, 2);
+        tools.log(scriptName, `Theres a new version available for Discord accept rules bot by AstroGD (${version} --> ${VERSIONINFO.version})`, 2);
         newVerAvailable = true;
     }
-
-    if (tools.checkToolsVersion()) newVerAvailable = true;
-    if (discord_accept_rules_bot.checkVersion()) newVerAvailable = true;
 
     return newVerAvailable;
 }
@@ -149,8 +143,7 @@ rl.on("line", async (input) => {
             console.log(`===== Discord Bot Mainframe Commands\n\nshutdown:                     Deactivates all correctly installed Modules and shuts the bot down\ncheckversion:                 Checks if there is a new version available\nhelp:                         Displays all commands available from Modules or Mainframe\nreloaddb:                     Reloads Database. Use only if changes were made manually\nreloadconfig:                 Reloads Config. Use only if changes were made manually\n\n=====`);
             break;
         case "checkversion":
-            if (await checkVersion()) console.log("One or more Modules need an update!");
-            else console.log("Everythings up to date!");
+            if (!await checkVersion()) console.log("Everythings up to date!");
             break;
         default:
             if (!success) {
