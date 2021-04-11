@@ -1,3 +1,8 @@
+# Deprecated branch
+
+This version of Dicord Accept rules bot is deprecated and will no longer be supported.
+Please switch to the master branch and download a current release!
+
 # Discord Accept Rules Module
 
 This is a module for my Discord Bot Mainframe. You can find it [here](https://go.astrogd.eu/mainframe).

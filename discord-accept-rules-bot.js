@@ -1,17 +1,27 @@
 /**
  * Discord Accept Rules Bot
- * @version 1.0.0
+ * @version 1.0.1
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
 var scriptName = "modules.discord-accept-rules-bot.js",
-    version = "1.0.0",
+    version = "1.0.1",
     mainframeMinVersion = "1.0.1";
 
 module.exports = function (client, fs, tools, dir) {
 
     async function init(deactivated) {
+        /**
+         * @deprecated This branch is deprecated
+         */
+
+        this.initialized = false;
+        this.activated = false;
+
+        console.error("This branch is deprecated and no longer supported. Please switch to master branch!");
+        process.exit();
+
         tools.log(scriptName, `Initializing ${scriptName} V${version}`);
 
         if (tools.checkMainframeVersion(mainframeMinVersion)) {
