@@ -1,5 +1,5 @@
-# WIP
-#### Released: TBA
+# V2.2.0
+#### Released: 11.04.2021
 
 ## New
 :memo: Add changelog.md
