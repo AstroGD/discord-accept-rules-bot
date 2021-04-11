@@ -1,6 +1,9 @@
-# Discord Bot Mainframe + Discord Accept Rules Module
+# Discord Accept Rules
 
-This is version 2.0.0 of my Discord Bot Mainframe with my Discord Accept Rules Module installed
+Discord Accept Rules is a simple Discord Bot that let's members get a role by clicking on a reaction.
+While this can be used in many different ways, the most common is to get access to a server after verifying and agreeing to the servers rules.
+
+This is a simple bot with just one use case - No overloaded functionality and not resource-heavy
 
 ## Installation
 

@@ -1,6 +1,6 @@
 {
   "name": "discord-accept-rules-bot",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "Let your Members accept the rules first and then give them a role",
   "main": "main.js",
   "scripts": {
@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/AstroGD/discord-accept-rules-bot#readme",
   "dependencies": {
-    "discord.js": "^12.5.1",
-    "follow-redirects": "^1.13.2",
+    "discord.js": "^12.5.3",
+    "follow-redirects": "^1.13.3",
     "fs-extra": "^9.1.0"
   }
 }

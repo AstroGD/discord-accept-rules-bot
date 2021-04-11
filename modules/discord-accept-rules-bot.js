@@ -1,34 +1,25 @@
 /**
  * Discord Accept Rules Bot
- * @version 2.1.2
  * @author AstroGD - https://www.astrogd.eu
  * @since 2018-07-15
  */
 
-var scriptName = "modules.discord-accept-rules-bot.js",
-    version = "2.1.2",
-    mainframeMinVersion = "2.0.0";
-
 const path = require("path");
+const scriptName = "modules.discord-accept-rules-bot.js";
+const package = require(path.join(__dirname, "../package.json"));
 
 module.exports = function (client, fs, tools, dir) {
 
     var config;
 
     async function init(deactivated) {
-        tools.log(scriptName, `Initializing ${scriptName} V${version}`);
+        tools.log(scriptName, `Initializing ${scriptName} V${package.version}`);
 
-        if (tools.checkMainframeVersion(mainframeMinVersion)) {
-            this.initialized = true;
-        } else {
-            tools.log(scriptName, `This Module requires a Mainframe Version of ${mainframeMaxVersion} or higher. Please update your Mainframe. This Module is not being activated.`, 2);
-            return;
-        }
+        this.intialized = true;
+
         if (!deactivated) {
             this.activated = true;
         }
-
-        if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.packages.acceptRulesBot})`, 2);
 
         this.db = JSON.parse(fs.readFileSync(`${dir}/db/discord-accept-rules-bot.db`, "utf-8"));
         this.config = checkConfigVersion(require(`${dir}/config/discord-accept-rules-bot.json`));
@@ -277,15 +268,6 @@ module.exports = function (client, fs, tools, dir) {
         }
     }
 
-    function checkVersion() {
-        if (tools.isVersionLower(VERSIONINFO.packages.acceptRulesBot, version)) {
-            tools.log(scriptName, `Theres a new version available for Discord Accept Rules Module (${version} --> ${VERSIONINFO.packages.acceptRulesBot})`, 2);
-            return true;
-        }
-
-        return false;
-    }
-
     function checkConfigVersion(config) {
         if (config.hasOwnProperty("version") && config.version >= 2) return config;
         config.version = 2;
@@ -328,7 +310,6 @@ module.exports = function (client, fs, tools, dir) {
         init,
         activate,
         deactivate,
-        command,
-        checkVersion
+        command
     }
 }
