@@ -4,8 +4,10 @@
  * @since 2018-07-15
  */
 var scriptName = "tools.js";
+const path = require("path");
 
 module.exports = function (Discord, client, fs, dir) {
+    const package = require(path.join(__dirname, "../package.json"));
 
     async function init() {
         let currdate = new Date();
@@ -16,8 +18,8 @@ module.exports = function (Discord, client, fs, dir) {
 
         this.initialized = true;
 
-        this.stream.write(`[${this.startupdate}] INFO [${scriptName}] ${scriptName} V${version} initialized\n`);
-        console.log(`[${this.startupdate}] INFO [${scriptName}] ${scriptName} V${version} initialized`);
+        this.stream.write(`[${this.startupdate}] INFO [${scriptName}] ${scriptName} V${package.version} initialized\n`);
+        console.log(`[${this.startupdate}] INFO [${scriptName}] ${scriptName} V${package.version} initialized`);
     }
 
     function log(x, msg, state) {
@@ -164,7 +166,13 @@ module.exports = function (Discord, client, fs, dir) {
             return null;
 
         }
-        versionInfo = JSON.parse(versionInfo.toString());
+
+        try {
+            versionInfo = JSON.parse(versionInfo.toString());
+        } catch (error) {
+            this.log(scriptName, `Something went wrong while checking for a newer version. Please check the repository manually to see if there is a new version available.`, 1);
+            return null;
+        }
 
         return versionInfo;
     }

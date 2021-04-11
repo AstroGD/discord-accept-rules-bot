@@ -77,7 +77,7 @@ async function init() {
     if (!VERSIONINFO) {
         tools.log(scriptName, "Version couldn't be fetched. Make sure you have a connection to the internet and access to software.astrogd.eu", 1);
     } else {
-        if (tools.isVersionLower(VERSIONINFO.version, version)) tools.log(scriptName, `Theres a new version available for Discord accept rules bot by AstroGD (${version} --> ${VERSIONINFO.version})`, 2);
+        if (tools.isVersionLower(VERSIONINFO.version, package.version)) tools.log(scriptName, `Theres a new version available for Discord accept rules bot by AstroGD (${package.version} --> ${VERSIONINFO.version})`, 2);
     }
 
     tools.log(scriptName, "Logging in...");
@@ -98,8 +98,8 @@ async function checkVersion() {
     }
 
     let newVerAvailable = false;
-    if (tools.isVersionLower(VERSIONINFO.version, version)) {
-        tools.log(scriptName, `Theres a new version available for Discord accept rules bot by AstroGD (${version} --> ${VERSIONINFO.version})`, 2);
+    if (tools.isVersionLower(VERSIONINFO.version, package.version)) {
+        tools.log(scriptName, `Theres a new version available for Discord accept rules bot by AstroGD (${package.version} --> ${VERSIONINFO.version})`, 2);
         newVerAvailable = true;
     }
 
@@ -158,5 +158,5 @@ rl.on("line", async (input) => {
 });
 
 rl.pause();
-console.log(`Starting ${scriptName} V${version}...`);
+console.log(`Starting ${scriptName} V${package.version}...`);
 init();
